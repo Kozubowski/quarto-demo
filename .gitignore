@@ -1,2 +1,7 @@
 .venv
 demo_files/
+__pycache__/
+demo.quarto_ipynb_1
+**.html
+*.pdf
+*.docx

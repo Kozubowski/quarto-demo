@@ -1,6 +1,6 @@
 ---
-title: "Quarto Basics: Markdown and Python Integration"
-author: "Data Enthusiast"
+title: "Quarto Basics"
+author: "Reproducible Research"
 date: today
 format:
   html:
@@ -9,46 +9,43 @@ format:
     code-fold: show
     theme: cosmo
 jupyter: .venv
+execute:
+  echo: fenced
 ---
 
 ## 1. Introduction
 
 This document demonstrates the basics of writing in **Quarto**. Quarto is a powerful tool that allows you to combine standard Markdown text with executable code blocks (like Python, R, or Julia).
 
----
+------------------------------------------------------------------------
 
 ## 2. Markdown Formatting Options
 
 Quarto uses standard Pandoc Markdown. Here are some of the most common formatting options available to you.
 
 ### Text Formatting
+
 You can format text to be **bold**, *italic*, or ***both***. You can also use `inline code` to highlight variable names or commands. You can also ~~strikethrough~~ text.
 
 ### Lists
-**Unordered List:**
-* Apples
-* Bananas
-* Cherries
-  * Dark Cherries
-  * Rainier Cherries
 
-**Ordered List:**
-1. First step
-2. Second step
-3. Third step
+**Unordered List:** \* Apples \* Bananas \* Cherries \* Dark Cherries \* Rainier Cherries
+
+**Ordered List:** 1. First step 2. Second step 3. Third step
 
 ### Quarto Callouts
+
 Quarto has special markdown extensions called "Callouts" which are great for drawing attention to specific information:
 
-::: {.callout-note}
+::: callout-note
 Note that Quarto can export to HTML, PDF, MS Word, and many other formats just by changing the `format` option in the YAML header!
 :::
 
-::: {.callout-warning}
+::: callout-warning
 Make sure you have your Python environment set up properly before rendering.
 :::
 
----
+------------------------------------------------------------------------
 
 ## 3. Triggering Python Code in Quarto
 
@@ -60,24 +57,53 @@ You can control how the code behaves using special comments starting with `#|` (
 #| echo: true
 #| eval: true
 
-# This is a simple Python code block
-a = 15
-b = 27
-total = a + b
+from sklearn.datasets import load_iris
+import pandas as pd
 
-print(f"The sum of {a} and {b} is {total}.")
+data = load_iris()
+df = pd.DataFrame(data.data, columns=data.feature_names)
+df["target"] = data.target
+
+print(f"The mean of the 'Sepal length' column is {df['sepal length (cm)'].mean():.2f}.")
+
 ```
 
----
+You can also print the data frame in a nice format:
+
+```{python}
+#| echo: true
+df.head(10)
+```
+
+Filer df based on parameter from YAML header:
+
+```{python}
+#| tags: [parameters]
+#| echo: false
+
+# This cell tells Quarto where to inject the parameters from the YAML header.
+some_param = 5.0
+```
+
+```{python}
+#| echo: false     # hides code
+#| warning: false  # hides warnings
+#| error: true     # shows errors instead of stopping execution
+#| cache: false     # speeds up re-rendering
+
+
+df = df[df['sepal length (cm)'] > some_param]
+df.head(10)
+
+```
+
+------------------------------------------------------------------------
 
 ## 4. Graphing with Python Modules
 
-Quarto seamlessly handles visual outputs from Python modules like `matplotlib`, `seaborn`, or `plotly`. 
+Quarto seamlessly handles visual outputs from Python modules like `matplotlib`, `seaborn`, or `plotly`.
 
-Below, we import `numpy` and `matplotlib.pyplot` to generate a graph. Notice the chunk options at the top:
-* `#| label:` gives the figure a cross-referenceable ID.
-* `#| fig-cap:` gives the figure a caption.
-* `#| warning: false` hides any system warnings from the final document.
+Notice the chunk options at the top: \* `#| label:` gives the figure a cross-referenceable ID. \* `#| fig-cap:` gives the figure a caption. \* `#| warning: false` hides any system warnings from the final document.
 
 ```{python}
 #| label: fig-imported-wave
@@ -91,4 +117,15 @@ import graph
 my_figure = graph.create_wave_plot()
 
 ```
+
 As seen in @fig-imported-wave, Quarto automatically embeds the plot and links the cross-reference!
+
+::: panel-tabset
+## Tab 1
+
+Content
+
+## Tab 2
+
+Content
+:::
