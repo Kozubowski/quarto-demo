@@ -29,9 +29,25 @@ You can format text to be **bold**, *italic*, or ***both***. You can also use `i
 
 ### Lists
 
-**Unordered List:** \* Apples \* Bananas \* Cherries \* Dark Cherries \* Rainier Cherries
+**Unordered List:** 
 
-**Ordered List:** 1. First step 2. Second step 3. Third step
+* Apples 
+
+* Bananas
+
+* Cherries 
+
+* Dark Cherries
+
+* Rainier Cherries
+
+**Ordered List:** 
+
+1. First step 
+
+2. Second step 
+
+3. Third step
 
 ### Quarto Callouts
 
@@ -75,13 +91,11 @@ You can also print the data frame in a nice format:
 df.head(10)
 ```
 
-Filer df based on parameter from YAML header:
+Filer df based on some parameter:
 
 ```{python}
-#| tags: [parameters]
-#| echo: false
+#| echo: true
 
-# This cell tells Quarto where to inject the parameters from the YAML header.
 some_param = 5.0
 ```
 
@@ -95,6 +109,15 @@ some_param = 5.0
 df = df[df['sepal length (cm)'] > some_param]
 df.head(10)
 
+```
+
+
+You can display the data frame in a nice markdown table format using the `tabulate` module:
+```{python}
+from tabulate import tabulate
+from IPython.display import Markdown
+
+Markdown(tabulate(df.head(), headers="keys", tablefmt="pipe", floatfmt=".2f"))
 ```
 
 ------------------------------------------------------------------------
@@ -114,7 +137,7 @@ Notice the chunk options at the top: \* `#| label:` gives the figure a cross-ref
 import graph
 
 # 2. Trigger the function
-my_figure = graph.create_wave_plot()
+graph.create_wave_plot()
 
 ```
 
