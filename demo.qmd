@@ -13,7 +13,7 @@ execute:
   echo: fenced
 ---
 
-## 1. Introduction
+### 1. Introduction
 
 This document demonstrates the basics of writing in **Quarto**. Quarto is a powerful tool that allows you to combine standard Markdown text with executable code blocks (like Python, R, or Julia).
 
@@ -29,25 +29,25 @@ You can format text to be **bold**, *italic*, or ***both***. You can also use `i
 
 ### Lists
 
-**Unordered List:** 
+**Unordered List:**
 
-* Apples 
+- Apples
 
-* Bananas
+- Bananas
 
-* Cherries 
+- Cherries
 
-* Dark Cherries
+- Dark Cherries
 
-* Rainier Cherries
+- Rainier Cherries
 
-**Ordered List:** 
+**Ordered List:**
 
-1. First step 
+1.  First step
 
-2. Second step 
+2.  Second step
 
-3. Third step
+3.  Third step
 
 ### Quarto Callouts
 
@@ -111,8 +111,8 @@ df.head(10)
 
 ```
 
-
 You can display the data frame in a nice markdown table format using the `tabulate` module:
+
 ```{python}
 from tabulate import tabulate
 from IPython.display import Markdown
